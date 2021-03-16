@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title> Custom Game </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+
+			function start(){
+				sjs.open("target",600,500);
+
+
+				//ball object and properties
+				var ball = new sjs.Image("Images/ball.png");
+				ball.type = "ball";
+				ball.setSize(60,60);
+				ball.center();
+
+
+				sjs.keyDown(RIGHT_KEY, function(){
+					ball.setImage("Images/ball.png");
+					ball.pushRight();
+				});
+
+				sjs.keyDown(LEFT_KEY, function(){
+					ball.setImage("Images/ball.png");
+					ball.pushLeft();
+				});
+
+				sjs.keyDown(UP_KEY, function(){
+					ball.pushUp();
+				});
+
+				sjs.keyDown(DOWN_KEY, function(){
+					ball.pushDown();
+				});
+
+
+				//paddle 1
+				var paddle1 = new sjs.Image("Images/paddle.png");
+				paddle1.type = "paddle";
+				paddle1.centerH().offset(-300,0);
+				paddle1.setSize(200,30);
+
+
+				//paddle 2
+				var paddle2 = new sjs.Image("Images/paddle2.png");
+				paddle2.type = "paddle";
+				paddle2.center().bottom().offset(150,0);
+				paddle2.setSize(200,30);
+
+
+				//score
+				var score = 0;
+				var score_txt = new sjs.Text("Bounces: 0", 21, "yellow");
+				score_txt.centerH();
+
+
+				//onHits
+				sjs.onHit("ball","paddle", function(ball,paddle){
+					score = score + 1;
+					score_txt.setText("Score: "+score);
+					sjs.bounceOff(ball,paddle);
+				});
+
+			}//end start
+
+		</script>
+	</head>
+	<body onload="start()">
+		
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
